@@ -1,0 +1,158 @@
+import 'package:flutter/material.dart';
+import 'package:loggy/loggy.dart';
+import 'package:sqflite/sqflite.dart' as sql;
+// ignore: depend_on_referenced_packages
+import 'package:path/path.dart' as path;
+import 'package:sqflite/sqlite_api.dart';
+import 'package:uuid/uuid.dart';
+
+
+
+
+class AppDatabase {
+  
+  AppDatabase() {
+    database();
+  }
+
+
+  Future<void> createVerbsTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS verbs (
+        local_id TEXT PRIMARY KEY,        -- UUID (local primary key)
+
+        id INTEGER UNIQUE,                       -- backend ID
+
+        english TEXT NOT NULL,
+        japanese TEXT NOT NULL,
+
+        present TEXT NOT NULL,
+        past TEXT NOT NULL,
+        negative TEXT NOT NULL,
+
+        polite_present TEXT NOT NULL,
+        polite_negative TEXT NOT NULL,
+        polite_past TEXT NOT NULL,
+        polite_past_negative TEXT NOT NULL,
+
+        te_form TEXT NOT NULL,
+        volitional TEXT NOT NULL,
+
+        created_at TEXT NOT NULL,         -- ISO8601 string
+        updated_at TEXT NOT NULL
+      );
+    ''');
+  }
+
+
+  Future<void> addNewColumns(Database db) async {
+    // try {
+    //   await db.execute('ALTER TABLE quest ADD COLUMN start_location_lat REAL;');
+    // } catch (e) {
+    //   logError('The "start_location_lat" column already exists in the quest table. Skipping...');
+    // }
+
+  }
+
+
+  Future<void> createTables() async {
+    final db = await database();
+
+    await createVerbsTable(db);
+    //For updating my database, remove in production
+    await addNewColumns(db);
+  }
+
+  // Future<void> purgeAppData() async {
+  //   final db = await database();
+  // }
+
+  Future<Database> database() async {  
+    final dbPath = await sql.getDatabasesPath();
+    
+    return await sql.openDatabase(
+      path.join(dbPath,'verbs.db'),
+      onCreate: (db, version) async {
+        await createTables();
+      },
+      version: 1,
+      onConfigure: _onConfigure
+    );
+  }
+
+    //Enables foreign keys to work
+    static Future _onConfigure(Database db) async {
+      await db.execute('PRAGMA foreign_keys = ON');
+      await db.execute('PRAGMA auto_vacuum=FULL');
+    }
+
+
+    Future<void> insertVerb(Database db, Map<String, dynamic> verb) async {
+      final localId = Uuid().v4();
+
+      await db.insert(
+        'verbs',
+        {
+          'local_id': localId,
+          'id': verb['id'],
+          'english': verb['english'],
+          'japanese': verb['japanese'],
+          'present': verb['present'],
+          'past': verb['past'],
+          'negative': verb['negative'],
+          'polite_present': verb['polite_present'],
+          'polite_negative': verb['polite_negative'],
+          'polite_past': verb['polite_past'],
+          'polite_past_negative': verb['polite_past_negative'],
+          'te_form': verb['te_form'],
+          'volitional': verb['volitional'],
+          'created_at': verb['created_at'],
+          'updated_at': verb['updated_at'],
+        },
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    }
+
+  Future<void> insertVerbsBatch(List<Map<String, dynamic>> verbs) async {
+    final db = await database();
+
+    //await createTables(db);
+
+    final batch = db.batch();
+
+    for (final verb in verbs) {
+      batch.insert(
+        'verbs',
+        {
+          'local_id': Uuid().v4(),
+          'id': verb['id'],
+          'english': verb['english'],
+          'japanese': verb['japanese'],
+          'present': verb['present'],
+          'past': verb['past'],
+          'negative': verb['negative'],
+          'polite_present': verb['polite_present'],
+          'polite_negative': verb['polite_negative'],
+          'polite_past': verb['polite_past'],
+          'polite_past_negative': verb['polite_past_negative'],
+          'te_form': verb['te_form'],
+          'volitional': verb['volitional'],
+          'created_at': verb['created_at'],
+          'updated_at': verb['updated_at'],
+        },
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    }
+
+    await batch.commit(noResult: true);
+  }
+
+  Future<List<Map<String, dynamic>>> getAllVerbsRaw() async {
+    final db = await database();
+
+    return await db.query('verbs', orderBy: 'id ASC');
+  }
+
+}
+
+

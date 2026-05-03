@@ -16,6 +16,8 @@ class AppDatabase {
   }
 
 
+
+
   Future<void> createVerbsTable(Database db) async {
     await db.execute('''
       CREATE TABLE IF NOT EXISTS verbs (
@@ -55,12 +57,11 @@ class AppDatabase {
   }
 
 
-  Future<void> createTables() async {
-    final db = await database();
+  Future<void> createTables(Database db) async {
 
     await createVerbsTable(db);
     //For updating my database, remove in production
-    await addNewColumns(db);
+    //await addNewColumns(db);
   }
 
   // Future<void> purgeAppData() async {
@@ -73,7 +74,7 @@ class AppDatabase {
     return await sql.openDatabase(
       path.join(dbPath,'verbs.db'),
       onCreate: (db, version) async {
-        await createTables();
+        await createTables(db);
       },
       version: 1,
       onConfigure: _onConfigure
@@ -85,6 +86,14 @@ class AppDatabase {
       await db.execute('PRAGMA foreign_keys = ON');
       await db.execute('PRAGMA auto_vacuum=FULL');
     }
+
+  Future<void> purgeAppData() async {
+    final db = await database();
+
+    // await db.execute("DELETE FROM quest");
+    // await db.execute("DELETE FROM cats");
+    await db.execute("DELETE FROM verbs");
+  }
 
 
     Future<void> insertVerb(Database db, Map<String, dynamic> verb) async {
@@ -152,6 +161,28 @@ class AppDatabase {
 
     return await db.query('verbs', orderBy: 'id ASC');
   }
+
+
+  Future<String?> getLatestUpdatedAt() async {
+    final db = await database();
+
+    // We only need the updated_at column from the top row
+    final List<Map<String, dynamic>> maps = await db.query(
+      'verbs',
+      columns: ['updated_at'],
+      orderBy: 'updated_at DESC',
+      limit: 1,
+    );
+
+    if (maps.isNotEmpty) {
+      return maps.first['updated_at'] as String;
+    }
+
+    // return null; // Table is empty
+    return null;
+  }
+
+
 
 }
 

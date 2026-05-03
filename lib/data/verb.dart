@@ -69,3 +69,43 @@ class Verb {
     };
   }
 }
+
+class Paginator<T> {
+  final List<List<T>> pages;
+
+  Paginator({
+    required this.pages,
+  });
+
+  /// Factory method to build a Paginator from a raw list of maps.
+  /// [data]: The List<Map<String, dynamic>> from your DB or API.
+  /// [pageSize]: How many items per sub-list.
+  /// [fromJson]: A function that converts a Map into your object T.
+  factory Paginator.fromRawData({
+    required List<Map<String, dynamic>> data,
+    required int pageSize,
+    required T Function(Map<String, dynamic>) fromJson,
+  }) {
+    // 1. Convert the Maps into objects of type T
+    final List<T> allItems = data.map((item) => fromJson(item)).toList();
+
+    // 2. Chunk the list into pages
+    List<List<T>> chunks = [];
+    for (var i = 0; i < allItems.length; i += pageSize) {
+      int end = (i + pageSize < allItems.length) ? i + pageSize : allItems.length;
+      chunks.add(allItems.sublist(i, end));
+    }
+
+    return Paginator(pages: chunks);
+  }
+
+  /// Helper to get a specific page safely
+  List<T> getPage(int index) {
+    if (index >= 0 && index < pages.length) {
+      return pages[index];
+    }
+    return [];
+  }
+
+  int get totalPages => pages.length;
+}

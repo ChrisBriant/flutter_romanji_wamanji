@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import '../data/verb.dart';
 
 class DataProvider extends ChangeNotifier {
-  List<Verb> _allVerbs = [];
+  Paginator<Verb>? _allVerbsPaginator;
 
-  setAllVerbs(List<Map<String,dynamic>> verbs) {
-    for ( Map<String,dynamic> verb in verbs) {
-      _allVerbs.add(Verb.fromJson(verb));
-    }
-    //_allVerbs = verbs;  
+  void setAllVerbsPaginator(Paginator<Verb> p) {
+    _allVerbsPaginator = p;
+  
     notifyListeners();
   }
 
-  List<Verb> get allVerbs => _allVerbs;
+  Paginator<Verb>? get allVerbsPaginator => _allVerbsPaginator;
 
 }

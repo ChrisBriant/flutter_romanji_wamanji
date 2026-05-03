@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import './screens/splash_screen.dart';
 import 'package:loggy/loggy.dart';
 import './services/http_overrides.dart';
+import 'package:provider/provider.dart';
+import './providers/data_provider.dart';
 
 void main() {
   Loggy.initLoggy();
@@ -17,13 +19,18 @@ class RomajiWamaji extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => DataProvider(),),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          // This is the theme of your application.
+          colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+        ),
+        home: const SplashScreen(),
       ),
-      home: const SplashScreen(),
     );
   }
 }

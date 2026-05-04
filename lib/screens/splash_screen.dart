@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:loggy/loggy.dart';
+import 'package:romanji_wamanji/widgets/loading_widget.dart';
 import '../data/database.dart';
 import '../data/verb.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +19,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  Paginator<Verb>? _paginator = null;
+  //final Paginator<Verb>? _paginator = null;
   
   @override
   void initState() {
@@ -97,44 +98,45 @@ class _SplashScreenState extends State<SplashScreen> {
         await db.insertVerbsBatch(data);
         logInfo("Batch data inserted");
       }
-
-
-
-      final allVerbs = await db.getAllVerbsRaw();
-      logInfo("DB contents: $allVerbs");
-      //Load data into the provider
-      final verbPaginator = Paginator<Verb>.fromRawData(
-        data: allVerbs,
-        pageSize: 10,
-        fromJson: (map) => Verb.fromJson(map),
-      );
-
-      // 3. Access your data
-      logInfo("Total Pages: ${verbPaginator.totalPages}");
-
-      if (verbPaginator.pages.isNotEmpty) {
-        List<Verb> firstPage = verbPaginator.getPage(0);
-        logInfo("First verb on page 1: ${firstPage[0].english}");
-      }
-
-    
-
-
-      // //Set int he provider
-      // if(context.mounted) {
-      //   DataProvider dp = Provider.of(context, listen: false);
-      //   dp.setAllVerbsPaginator(verbPaginator);
-      // }
-      // Future.microtask(() async {
-      //   Provider.of<DataProvider>(context, listen: false).setAllVerbsPaginator(verbPaginator);
-      // });
-      dataProvider.setAllVerbsPaginator(verbPaginator);
-      
-      
-
     } catch (err, stack) {
       logError("ERROR: $err");
       logError("STACK: $stack");
+    }
+
+
+    final allVerbs = await db.getAllVerbsRaw();
+    logInfo("DB contents: $allVerbs");
+    //Load data into the provider
+    final verbPaginator = Paginator<Verb>.fromRawData(
+      data: allVerbs,
+      pageSize: 10,
+      fromJson: (map) => Verb.fromJson(map),
+    );
+
+    // 3. Access your data
+    logInfo("Total Pages: ${verbPaginator.totalPages}");
+
+    if (verbPaginator.pages.isNotEmpty) {
+      List<Verb> firstPage = verbPaginator.getPage(0);
+      logInfo("First verb on page 1: ${firstPage[0].english}");
+    }
+
+  
+
+
+    // //Set int he provider
+    // if(context.mounted) {
+    //   DataProvider dp = Provider.of(context, listen: false);
+    //   dp.setAllVerbsPaginator(verbPaginator);
+    // }
+    // Future.microtask(() async {
+    //   Provider.of<DataProvider>(context, listen: false).setAllVerbsPaginator(verbPaginator);
+    // });
+    dataProvider.setAllVerbsPaginator(verbPaginator);
+    await Future.delayed(Duration(seconds: 10));
+    logInfo("Will redirect to homescreen");
+    if(mounted) {
+      Navigator.of(context).popAndPushNamed("/homescreen");
     }
   }
 
@@ -158,6 +160,14 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: Column(
+        children: [
+          const SizedBox(height: 40,),
+          Image.asset('assets/splash_2.png'),
+          LoadingWidget(message: "Loading...",),
+        ]
+      ),
+    );
   }
 }

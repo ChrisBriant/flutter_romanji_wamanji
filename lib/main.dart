@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:romanji_wamanji/screens/home_screen.dart';
 import './screens/splash_screen.dart';
 import 'package:loggy/loggy.dart';
 import './services/http_overrides.dart';
@@ -30,6 +31,9 @@ class RomajiWamaji extends StatelessWidget {
           colorScheme: .fromSeed(seedColor: Colors.deepPurple),
         ),
         home: const SplashScreen(),
+        routes: {
+          HomeScreen.routeName : (context) => HomeScreen(),
+        },
       ),
     );
   }

@@ -78,6 +78,7 @@ class Paginator<T> {
   });
 
   /// Factory method to build a Paginator from a raw list of maps.
+  // ignore: unintended_html_in_doc_comment
   /// [data]: The List<Map<String, dynamic>> from your DB or API.
   /// [pageSize]: How many items per sub-list.
   /// [fromJson]: A function that converts a Map into your object T.

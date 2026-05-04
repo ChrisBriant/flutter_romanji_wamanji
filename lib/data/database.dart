@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:loggy/loggy.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart' as path;

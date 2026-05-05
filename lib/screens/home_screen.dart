@@ -4,28 +4,14 @@ import 'package:provider/provider.dart';
 import '../providers/data_provider.dart';
 import "../data/verb.dart";
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   static const String routeName = "/homescreen";
 
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  int _currentPage = 0;
-
-
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text("Home", style: TextStyle(color: Colors.white),),
-      //   backgroundColor: Colors.black,
-      //   actions: [],
-      // ),
       backgroundColor: const Color.fromARGB(255, 5, 6, 4),
       body: Column(
         children: [
@@ -52,27 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 subtitle: Text(item.japanese),     
               )              
-              ,
-              // listItem: (context,idx) => ListTile(
-              //   title: Text(
-              //     dp.allVerbsPaginator!.pages[_currentPage][idx].english,
-              //     style: TextStyle(
-              //       color: Colors.white
-              //     ),
-              //   ),
-              //   subtitle: Text(dp.allVerbsPaginator!.pages[_currentPage][idx].japanese),
-              // ),
-              // maxPages: dp.allVerbsPaginator!.pages.length,
-              // currentPage: _currentPage,
-              // onPageForward: () => onPageForward(dp),
-              // onPageBack: () {
-              //   if(_currentPage > 0) {
-              //     //Advance the page
-              //     setState(() {
-              //       _currentPage--;
-              //     });
-              //   }
-              // },
             )
           )
         ]
@@ -84,23 +49,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
 class RomajiListBox extends StatefulWidget {
   final Paginator paginator;
-  //final int itemCount;
   final Widget Function(BuildContext, dynamic item) itemContentBuilder;
-  //final NullableIndexedWidgetBuilder listItem;
-  // final int maxPages;
-  // final int currentPage;
-  // final VoidCallback onPageForward;
-  // final Function onPageBack;
+
 
   const RomajiListBox({
     required this.paginator,
-    //required this.itemCount,
     required this.itemContentBuilder,
-    //required this.listItem,
-    // required this.maxPages,
-    // required this.currentPage,
-    // required this.onPageForward,
-    // required this.onPageBack,
     super.key,
   });
 
@@ -145,23 +99,9 @@ class _RomajiListBoxState extends State<RomajiListBox> {
           margin: EdgeInsets.symmetric(vertical: 20),
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height * .4,
-          // child: ListView.builder(
-          //   shrinkWrap: true,
-          //   itemCount: widget.itemCount,
-          //   itemBuilder: widget.listItem
-          // ),
           child: ListView.builder(
             shrinkWrap: true,
             itemCount: widget.paginator.pages[_currentPage].length,
-            // itemBuilder: (context,idx) => ListTile(
-            //     title: Text(
-            //       widget.paginator.pages[_currentPage][idx].english,
-            //       style: TextStyle(
-            //         color: Colors.white
-            //       ),
-            //     ),
-            //     subtitle: Text(widget.paginator.pages[_currentPage][idx].japanese),     
-            // )
             itemBuilder: (context, index) {
               // Pass the specific item to the parent's builder
               return widget.itemContentBuilder(context, currentList[index]);
@@ -169,6 +109,7 @@ class _RomajiListBoxState extends State<RomajiListBox> {
           ),
         ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             IconButton(
               onPressed: _currentPage != 0 ? () => onPageBack() : null, // widget.onPageBack, 

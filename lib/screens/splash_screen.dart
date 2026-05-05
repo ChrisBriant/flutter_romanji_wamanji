@@ -133,7 +133,7 @@ class _SplashScreenState extends State<SplashScreen> {
     //   Provider.of<DataProvider>(context, listen: false).setAllVerbsPaginator(verbPaginator);
     // });
     dataProvider.setAllVerbsPaginator(verbPaginator);
-    await Future.delayed(Duration(seconds: 10));
+    await Future.delayed(Duration(seconds: 1));
     logInfo("Will redirect to homescreen");
     if(mounted) {
       Navigator.of(context).popAndPushNamed("/homescreen");

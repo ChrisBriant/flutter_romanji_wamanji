@@ -21,13 +21,14 @@ class LoadingWidget extends StatelessWidget {
               message,
               style: const TextStyle(
                 fontSize: 30,
-                fontWeight: FontWeight.bold
+                fontWeight: FontWeight.bold,
+                color: Colors.black
               ),
 
             )),
             const SizedBox(width: 10,),
             const CircularProgressIndicator(
-              
+              color: Colors.black,
             ),
           ],
         ),

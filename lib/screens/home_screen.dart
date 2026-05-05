@@ -36,7 +36,11 @@ class HomeScreen extends StatelessWidget {
                     color: Colors.white
                   ),
                 ),
-                subtitle: Text(item.japanese),     
+                subtitle: Text(item.japanese),
+                onTap: () {
+                  dp.setSelectedVerb(item);
+                  Navigator.of(context).pushNamed("/verbdisplayscreen");
+                },   
               )              
             )
           )

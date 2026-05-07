@@ -77,12 +77,12 @@ class _SplashScreenState extends State<SplashScreen> {
     );
 
     // 3. Access your data
-    logInfo("Total Pages: ${verbPaginator.totalPages}");
+    // logInfo("Total Pages: ${verbPaginator.totalPages}");
 
-    if (verbPaginator.pages.isNotEmpty) {
-      List<Verb> firstPage = verbPaginator.getPage(0);
-      logInfo("First verb on page 1: ${firstPage[0].english}");
-    }
+    // if (verbPaginator.pages.isNotEmpty) {
+    //   List<Verb> firstPage = verbPaginator.getPage(0);
+    //   logInfo("First verb on page 1: ${firstPage[0].english}");
+    // }
 
     dataProvider.setAllVerbsPaginator(verbPaginator);
     await Future.delayed(Duration(seconds: 1));

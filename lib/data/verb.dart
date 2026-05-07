@@ -108,5 +108,11 @@ class Paginator<T> {
     return [];
   }
 
+  List<Map<String, dynamic>> toRawList(Map<String, dynamic> Function(T) toJson) {
+    return pages.expand((page) => page).map(toJson).toList();
+  }
+
   int get totalPages => pages.length;
+
+  List<T> get allItems => pages.expand((page) => page).toList();
 }

@@ -94,7 +94,8 @@ class AppDatabase {
   }
 
 
-    Future<void> insertVerb(Database db, Map<String, dynamic> verb) async {
+    Future<void> insertVerb(Map<String, dynamic> verb) async {
+      final db = await database();
       final localId = Uuid().v4();
 
       await db.insert(

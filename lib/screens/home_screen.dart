@@ -13,39 +13,51 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 5, 6, 4),
-      body: Column(
-        children: [
-          //const SizedBox(height: 40,),
-          Image.asset("assets/romaji_wamaji.png"),
-          const Text("Verbs",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.bold
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            //const SizedBox(height: 40,),
+            Image.asset("assets/romaji_wamaji.png"),
+            const Text("Verbs",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold
+              ),
             ),
-          ),
-          Consumer<DataProvider>(
-
-            builder: (ctx,dp,_) => RomajiListBox(
-              //itemCount : dp.allVerbsPaginator!.pages[_currentPage].length,
-              paginator: dp.allVerbsPaginator!,
-              itemContentBuilder: (context,item) => ListTile(
-                title: Text(
-                  item.english,
-                  style: TextStyle(
-                    color: Colors.white
-                  ),
-                ),
-                subtitle: Text(item.japanese),
-                onTap: () {
-                  dp.setSelectedVerb(item);
-                  Navigator.of(context).pushNamed("/verbdisplayscreen");
-                },   
-              )              
-            )
-          )
-        ]
+            Consumer<DataProvider>(
         
+              builder: (ctx,dp,_) => RomajiListBox(
+                //itemCount : dp.allVerbsPaginator!.pages[_currentPage].length,
+                paginator: dp.allVerbsPaginator!,
+                itemContentBuilder: (context,item) => ListTile(
+                  title: Text(
+                    item.english,
+                    style: TextStyle(
+                      color: Colors.white
+                    ),
+                  ),
+                  subtitle: Text(item.japanese),
+                  onTap: () {
+                    dp.setSelectedVerb(item);
+                    Navigator.of(context).pushNamed("/verbdisplayscreen");
+                  },   
+                )              
+              )
+            ),
+            const Text(
+              "Verb not listed?",
+              style: TextStyle(
+                color: Colors.white
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () => Navigator.of(context).pushNamed("/addverbscreen"), 
+              child: Text("Add Verb")
+            )
+          ]
+          
+        ),
       ),
     );
   }

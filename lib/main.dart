@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:romanji_wamanji/screens/add_verb_screen.dart';
 import 'package:romanji_wamanji/screens/home_screen.dart';
 import 'package:romanji_wamanji/screens/verb_display_screen.dart';
 import './screens/splash_screen.dart';
@@ -47,6 +48,7 @@ class RomajiWamaji extends StatelessWidget {
         routes: {
           HomeScreen.routeName : (context) => HomeScreen(),
           VerbDisplayScreen.routeName : (context) => VerbDisplayScreen(),
+          AddVerbScreen.routeName : (context) => AddVerbScreen()
         },
       ),
     );

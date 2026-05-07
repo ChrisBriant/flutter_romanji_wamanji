@@ -69,6 +69,7 @@ flutter:
     - assets/splash_2.png
     - assets/title.png
     - assets/romaji_wamaji.png
+    - assets/add_verb.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

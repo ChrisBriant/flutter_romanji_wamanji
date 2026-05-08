@@ -94,31 +94,35 @@ class AppDatabase {
   }
 
 
-    Future<void> insertVerb(Map<String, dynamic> verb) async {
+    Future<Map<String,dynamic>> insertVerb(Map<String, dynamic> verb) async {
       final db = await database();
       final localId = Uuid().v4();
 
+      Map<String,dynamic> row =         {
+        'local_id': localId,
+        'id': verb['id'],
+        'english': verb['english'],
+        'japanese': verb['japanese'],
+        'present': verb['present'],
+        'past': verb['past'],
+        'negative': verb['negative'],
+        'polite_present': verb['polite_present'],
+        'polite_negative': verb['polite_negative'],
+        'polite_past': verb['polite_past'],
+        'polite_past_negative': verb['polite_past_negative'],
+        'te_form': verb['te_form'],
+        'volitional': verb['volitional'],
+        'created_at': verb['created_at'],
+        'updated_at': verb['updated_at'],
+      };
+
       await db.insert(
         'verbs',
-        {
-          'local_id': localId,
-          'id': verb['id'],
-          'english': verb['english'],
-          'japanese': verb['japanese'],
-          'present': verb['present'],
-          'past': verb['past'],
-          'negative': verb['negative'],
-          'polite_present': verb['polite_present'],
-          'polite_negative': verb['polite_negative'],
-          'polite_past': verb['polite_past'],
-          'polite_past_negative': verb['polite_past_negative'],
-          'te_form': verb['te_form'],
-          'volitional': verb['volitional'],
-          'created_at': verb['created_at'],
-          'updated_at': verb['updated_at'],
-        },
+        row,
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
+
+      return row;
     }
 
   Future<void> insertVerbsBatch(List<Map<String, dynamic>> verbs) async {

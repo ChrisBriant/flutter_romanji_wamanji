@@ -16,7 +16,7 @@ class NetworkServices {
 
       final res = await http.post(url,headers: {
         "Content-Type": "application/json"
-      },body: jsonEncode(body)).timeout(const Duration(seconds: 5));
+      },body: jsonEncode(body)).timeout(const Duration(seconds: 30));
 
       logInfo("RESPONSE ${res.statusCode}");
 

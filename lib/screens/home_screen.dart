@@ -12,7 +12,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 5, 6, 4),
+      //backgroundColor: const Color.fromARGB(255, 5, 6, 4),
+      backgroundColor: Colors.black,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -31,6 +32,7 @@ class HomeScreen extends StatelessWidget {
                 //itemCount : dp.allVerbsPaginator!.pages[_currentPage].length,
                 paginator: dp.allVerbsPaginator!,
                 itemContentBuilder: (context,item) => ListTile(
+                  key: ValueKey(item.id),
                   title: Text(
                     item.english,
                     style: TextStyle(

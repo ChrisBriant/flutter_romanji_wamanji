@@ -19,84 +19,86 @@ class VerbDisplayScreen extends StatelessWidget {
           //   backgroundColor: Colors.black,
           // ),
           backgroundColor: Colors.black,
-          body: Center(
-            child: Column(
-              children: [
-                Text(
-                  dp.selectedVerb!.english,
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white
-
-                  ),
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height * .7,
-                  decoration: BoxDecoration(
-                    border: Border.all(
+          body: SingleChildScrollView(
+            child: Center(
+              child: Column(
+                children: [
+                  Text(
+                    dp.selectedVerb!.english,
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
                       color: Colors.white
-                    ),
-                    borderRadius: BorderRadius.circular(10)
-                  ),
-                  child: SingleChildScrollView(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    child: Column(
-                      children: [
-                        ListPair(
-                          textA: "English",
-                          textB: dp.selectedVerb!.english,
-                        ),
-                       ListPair(
-                          textA: "Japanese",
-                          textB: dp.selectedVerb!.japanese,
-                        ),
-                        ListPair(
-                          textA: "Presenet",
-                          textB: dp.selectedVerb!.present,
-                        ),
-                       ListPair(
-                          textA: "Past",
-                          textB: dp.selectedVerb!.past,
-                        ),
-                       ListPair(
-                          textA: "Negative",
-                          textB: dp.selectedVerb!.negative,
-                        ),
-                        ListPair(
-                          textA: "Polite Present",
-                          textB: dp.selectedVerb!.politePresent,
-                        ),
-                       ListPair(
-                          textA: "Polite Negative",
-                          textB: dp.selectedVerb!.politeNegative,
-                        ),
-                        ListPair(
-                          textA: "Polite Past",
-                          textB: dp.selectedVerb!.politePast,
-                        ),
-                       ListPair(
-                          textA: "Polite Past Negative",
-                          textB: dp.selectedVerb!.politePastNegative,
-                        ),
-                       ListPair(
-                          textA: "Te Form",
-                          textB: dp.selectedVerb!.teForm,
-                        ),
-                       ListPair(
-                          textA: "Volitional",
-                          textB: dp.selectedVerb!.volitional,
-                        ),
-                      ]
-                    
+            
                     ),
                   ),
-                ),
-                ElevatedButton(
-                  onPressed: () => Navigator.of(context).pop(), 
-                  child: const Text("Close")
-                )
-              ],
+                  Container(
+                    height: MediaQuery.of(context).size.height * .7,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.white
+                      ),
+                      borderRadius: BorderRadius.circular(10)
+                    ),
+                    child: SingleChildScrollView(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      child: Column(
+                        children: [
+                          ListPair(
+                            textA: "English",
+                            textB: dp.selectedVerb!.english,
+                          ),
+                         ListPair(
+                            textA: "Japanese",
+                            textB: dp.selectedVerb!.japanese,
+                          ),
+                          ListPair(
+                            textA: "Presenet",
+                            textB: dp.selectedVerb!.present,
+                          ),
+                         ListPair(
+                            textA: "Past",
+                            textB: dp.selectedVerb!.past,
+                          ),
+                         ListPair(
+                            textA: "Negative",
+                            textB: dp.selectedVerb!.negative,
+                          ),
+                          ListPair(
+                            textA: "Polite Present",
+                            textB: dp.selectedVerb!.politePresent,
+                          ),
+                         ListPair(
+                            textA: "Polite Negative",
+                            textB: dp.selectedVerb!.politeNegative,
+                          ),
+                          ListPair(
+                            textA: "Polite Past",
+                            textB: dp.selectedVerb!.politePast,
+                          ),
+                         ListPair(
+                            textA: "Polite Past Negative",
+                            textB: dp.selectedVerb!.politePastNegative,
+                          ),
+                         ListPair(
+                            textA: "Te Form",
+                            textB: dp.selectedVerb!.teForm,
+                          ),
+                         ListPair(
+                            textA: "Volitional",
+                            textB: dp.selectedVerb!.volitional,
+                          ),
+                        ]
+                      
+                      ),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => Navigator.of(context).popAndPushNamed("/homescreen"), 
+                    child: const Text("Close")
+                  )
+                ],
+              ),
             ),
           ),
         )

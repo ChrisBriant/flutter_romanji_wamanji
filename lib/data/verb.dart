@@ -115,4 +115,5 @@ class Paginator<T> {
   int get totalPages => pages.length;
 
   List<T> get allItems => pages.expand((page) => page).toList();
+  
 }

@@ -32,4 +32,32 @@ class NetworkServices {
     return null;
 
   }
+
+  static Future<Map<String,dynamic>?> getVerbExampleApi(int verbId, String form) async {
+    try {
+      Uri url = Uri.parse('$baseUrl/translate/getverbexample');
+
+      final Map<String,dynamic> body = {
+        "verb_id" : verbId,
+        "form" : form
+      };
+
+      final res = await http.post(url,headers: {
+        "Content-Type": "application/json"
+      },body: jsonEncode(body)).timeout(const Duration(seconds: 30));
+
+      logInfo("RESPONSE ${res.statusCode}");
+
+      if (res.statusCode == 200) {
+        final Map<String, dynamic> data =
+            Map<String, dynamic>.from(jsonDecode(res.body));
+        return data;
+      }
+    } catch (err) {
+        logError("ERROR: $err");
+    }
+
+    return null;
+
+  }
 }

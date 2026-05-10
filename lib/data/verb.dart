@@ -1,5 +1,6 @@
 class Verb {
   final int id;
+  final String localId;
   final String english;
   final String japanese;
   final String present;
@@ -16,6 +17,7 @@ class Verb {
 
   Verb({
     required this.id,
+    required this.localId,
     required this.english,
     required this.japanese,
     required this.present,
@@ -35,6 +37,7 @@ class Verb {
   factory Verb.fromJson(Map<String, dynamic> json) {
     return Verb(
       id: json['id'],
+      localId : json['local_id'],
       english: json['english'],
       japanese: json['japanese'],
       present: json['present'],
@@ -67,6 +70,33 @@ class Verb {
       'te_form': teForm,
       'volitional': volitional,
     };
+  }
+}
+
+class VerbExample {
+  final Verb verb;
+  final String form;
+  final String romaji;
+  final String english;
+
+  VerbExample(
+    {
+      required this.verb,
+      required this.form,
+      required this.romaji,
+      required this.english
+    }
+  );
+
+
+  /// Create from JSON (API response)
+  factory VerbExample.fromJson(Map<String, dynamic> json) {
+    return VerbExample(
+      verb: json['verb'],
+      form : json['form_type'],
+      english: json['english'],
+      romaji: json['romaji']
+    );
   }
 }
 

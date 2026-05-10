@@ -45,6 +45,27 @@ class AppDatabase {
   }
 
 
+  Future<void> createVerbExampleTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS verb_examples (
+        id TEXT PRIMARY KEY,        -- UUID (local primary key)
+        verb_id TEXT NOT NULL,
+        form_type TEXT NOT NULL,
+
+        romaji TEXT NOT NULL,
+        english TEXT NOT NULL,
+
+        created_at TEXT NOT NULL,         -- ISO8601 string
+        updated_at TEXT NOT NULL,
+        FOREIGN KEY (verb_id)
+          REFERENCES verbs(local_id)
+          ON DELETE CASCADE,
+
+        UNIQUE(romaji)
+      );
+    ''');
+  }
+
   Future<void> addNewColumns(Database db) async {
     // try {
     //   await db.execute('ALTER TABLE quest ADD COLUMN start_location_lat REAL;');
@@ -58,6 +79,8 @@ class AppDatabase {
   Future<void> createTables(Database db) async {
 
     await createVerbsTable(db);
+    //await db.execute("DROP TABLE verb_examples;");
+    await createVerbExampleTable(db);
     //For updating my database, remove in production
     //await addNewColumns(db);
   }
@@ -162,6 +185,8 @@ class AppDatabase {
   Future<List<Map<String, dynamic>>> getAllVerbsRaw() async {
     final db = await database();
 
+    await createTables(db);
+
     return await db.query('verbs', orderBy: 'id ASC');
   }
 
@@ -186,6 +211,36 @@ class AppDatabase {
   }
 
 
+
+  Future<Map<String,dynamic>> insertVerbExample(Map<String, dynamic> verbExample) async {
+    final db = await database();
+    final localId = Uuid().v4();
+
+    Map<String,dynamic> row =         {
+      'id': localId,
+      'verb_id': verbExample['verbExampleId'],
+      'form_type': verbExample['form_type'],
+      'romaji': verbExample['romaji'],
+      'english': verbExample['english'],
+      'created_at': verbExample['created_at'],
+      'updated_at': verbExample['updated_at'],
+    };
+
+    await db.insert(
+      'verb_examples',
+      row,
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+
+    return row;
+  }
+
+
+  Future<List<Map<String, dynamic>>> getAllVerbExamplesRaw() async {
+    final db = await database();
+
+    return await db.query('verb_examples', orderBy: 'id ASC');
+  }
 
 }
 

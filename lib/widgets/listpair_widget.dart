@@ -16,8 +16,9 @@ class ListPair extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 6),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          const SizedBox(width: 10,),
           Container(
             decoration: BoxDecoration(
               color: Colors.white24

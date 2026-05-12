@@ -242,6 +242,31 @@ class AppDatabase {
     return await db.query('verb_examples', orderBy: 'id ASC');
   }
 
+  Future<List<Map<String, dynamic>>> getVerbExamplesByIdRaw(localId) async {
+    final db = await database();
+
+    return await db.query(
+      'verb_examples', 
+      where: "verb_id=?",
+      whereArgs: [localId]
+    );
+  }
+
+  Future<Map<String, dynamic>?> getVerbExampleByIdAndForm(String localId, String form) async {
+    final db = await database();
+    List<Map<String,dynamic>> result = await db.query(
+      'verb_examples', 
+      where: "verb_id = ? AND form_type = ?",
+      whereArgs: [localId,form]
+    );
+    if(result.isNotEmpty) {
+      return result[0];
+    } else {
+      return null;
+    }
+  }
+
+
 }
 
 

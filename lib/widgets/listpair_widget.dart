@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class ListPair extends StatelessWidget {
   final String textA;
   final String textB;
+  final MainAxisAlignment? alignment;
 
   const ListPair({
     required this.textA,
     required this.textB,
+    this.alignment,
     super.key
   
   });
@@ -16,7 +18,7 @@ class ListPair extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 6),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: alignment != null ? alignment! : MainAxisAlignment.start,
         children: [
           const SizedBox(width: 10,),
           Container(

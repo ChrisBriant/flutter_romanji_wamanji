@@ -76,15 +76,29 @@ class _SplashScreenState extends State<SplashScreen> {
       fromJson: (map) => Verb.fromJson(map),
     );
 
-    // 3. Access your data
-    // logInfo("Total Pages: ${verbPaginator.totalPages}");
-
-    // if (verbPaginator.pages.isNotEmpty) {
-    //   List<Verb> firstPage = verbPaginator.getPage(0);
-    //   logInfo("First verb on page 1: ${firstPage[0].english}");
-    // }
-
     dataProvider.setAllVerbsPaginator(verbPaginator);
+    await Future.delayed(Duration(seconds: 1));
+
+
+    //Get the verb examples ldata
+    //MIGHT NOT BE NEEDED AS WHY HAVE ALL THE VERB EXAMPLES?
+    final allVerbExamples = await db.getAllVerbExamplesRaw();
+    List<Verb> rawVerbs = verbPaginator.allItems;
+    List<Map<String,dynamic>> allVerbExamplesWithVerbObject = allVerbExamples.map<Map<String,dynamic>>((ve) {
+      Verb v = rawVerbs.firstWhere((verb) => verb.localId == ve["verb_id"]);
+      return {
+        "verb" : v,
+        ...ve
+      }; 
+    }).toList();
+    //Load data into the provider
+    final verbExamplePaginator = Paginator<VerbExample>.fromRawData(
+      data: allVerbExamplesWithVerbObject,
+      pageSize: 10,
+      fromJson: (map) => VerbExample.fromJson(map),
+    );
+
+    dataProvider.setAllVerbExamplesPaginator(verbExamplePaginator);
     await Future.delayed(Duration(seconds: 1));
     logInfo("Will redirect to homescreen");
     if(mounted) {

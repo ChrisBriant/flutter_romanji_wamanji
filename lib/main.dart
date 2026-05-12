@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:romanji_wamanji/screens/add_verb_screen.dart';
 import 'package:romanji_wamanji/screens/home_screen.dart';
 import 'package:romanji_wamanji/screens/verb_display_screen.dart';
+import 'package:romanji_wamanji/screens/verb_example_screen.dart';
+import 'package:romanji_wamanji/screens/verb_examples_screen.dart';
 import './screens/splash_screen.dart';
 import 'package:loggy/loggy.dart';
 import './services/http_overrides.dart';
@@ -48,7 +50,10 @@ class RomajiWamaji extends StatelessWidget {
         routes: {
           HomeScreen.routeName : (context) => HomeScreen(),
           VerbDisplayScreen.routeName : (context) => VerbDisplayScreen(),
-          AddVerbScreen.routeName : (context) => AddVerbScreen()
+          AddVerbScreen.routeName : (context) => AddVerbScreen(),
+          VerbExampleScreen.routeName : (content) => VerbExampleScreen(),
+          VerbExamplesScreen.routeName : (context) => const VerbExamplesScreen(),
+
         },
       ),
     );

@@ -77,6 +77,9 @@ class VerbDisplayScreen extends StatelessWidget {
       logInfo("VERB EXAMPLE RETRIEVED $newVerbExample");
       dp.setSelectedVerbExample(VerbExample.fromJson(newVerbExampleCopy));
       //Need to navigate to screen also regression test with the API connected
+      if(context.mounted) {
+        Navigator.of(context).pushNamed("/verbexamplescreen");
+      }
     }
 
   }

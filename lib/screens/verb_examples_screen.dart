@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../providers/data_provider.dart';
 import '../data/verb.dart';
 import '../widgets/listpair_widget.dart';
+import '../widgets/verb_example_widget.dart';
 
 class VerbExamplesScreen extends StatelessWidget {
   static const String routeName = "/verbexamplesscreen";
@@ -13,11 +14,16 @@ class VerbExamplesScreen extends StatelessWidget {
 
     for (VerbExample verbExample in examples) {
       examplesAsWidgets.add(Center(
-        child: ListPair(
-          textA: verbExample.form,
-          textB: verbExample.romaji,
-          alignment: MainAxisAlignment.center,
+        child: VerbExampleWidget(
+          form: verbExample.form,
+          english: verbExample.english, 
+          romaji: verbExample.romaji
         ),
+        // child: ListPair(
+        //   textA: verbExample.form,
+        //   textB: verbExample.romaji,
+        //   alignment: MainAxisAlignment.center,
+        // ),
       ));
     }
 
@@ -55,7 +61,15 @@ class VerbExamplesScreen extends StatelessWidget {
                       clipBehavior: Clip.antiAliasWithSaveLayer,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: _getVerbExamplesAsChildWidgets(dp.examplesForVerb!)
+                        children: dp.examplesForVerb!.isNotEmpty    
+                          ? _getVerbExamplesAsChildWidgets(dp.examplesForVerb!)
+                          : [Center(child: Text(
+                            "There are no examples to display",
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white
+                            ),
+                          ),)]
                       ),
                     ),
                   ),

@@ -174,37 +174,45 @@ class VerbDisplayScreen extends StatelessWidget {
                             textB: dp.selectedVerb!.present,
                             formClickAction: () => formClickAction(context,dp.selectedVerb!.id,dp.selectedVerb!.localId,"present"),
                           ),
-                         ListPair(
+                         ListPairWithAction(
                             textA: "Past",
                             textB: dp.selectedVerb!.past,
+                            formClickAction: () => formClickAction(context,dp.selectedVerb!.id,dp.selectedVerb!.localId,"past"),
                           ),
-                         ListPair(
+                         ListPairWithAction(
                             textA: "Negative",
                             textB: dp.selectedVerb!.negative,
+                            formClickAction: () => formClickAction(context,dp.selectedVerb!.id,dp.selectedVerb!.localId,"negative"),
                           ),
-                          ListPair(
+                          ListPairWithAction(
                             textA: "Polite Present",
                             textB: dp.selectedVerb!.politePresent,
+                            formClickAction: () => formClickAction(context,dp.selectedVerb!.id,dp.selectedVerb!.localId,"polite_present"),
                           ),
-                         ListPair(
+                         ListPairWithAction(
                             textA: "Polite Negative",
                             textB: dp.selectedVerb!.politeNegative,
+                            formClickAction: () => formClickAction(context,dp.selectedVerb!.id,dp.selectedVerb!.localId,"polite_negative"),
                           ),
-                          ListPair(
+                          ListPairWithAction(
                             textA: "Polite Past",
                             textB: dp.selectedVerb!.politePast,
+                            formClickAction: () => formClickAction(context,dp.selectedVerb!.id,dp.selectedVerb!.localId,"polite_past"),
                           ),
-                         ListPair(
+                         ListPairWithAction(
                             textA: "Polite Past Negative",
                             textB: dp.selectedVerb!.politePastNegative,
+                            formClickAction: () => formClickAction(context,dp.selectedVerb!.id,dp.selectedVerb!.localId,"polite_past_negative"),
                           ),
-                         ListPair(
+                         ListPairWithAction(
                             textA: "Te Form",
                             textB: dp.selectedVerb!.teForm,
+                            formClickAction: () => formClickAction(context,dp.selectedVerb!.id,dp.selectedVerb!.localId,"te_form"),
                           ),
-                         ListPair(
+                         ListPairWithAction(
                             textA: "Volitional",
                             textB: dp.selectedVerb!.volitional,
+                            formClickAction: () => formClickAction(context,dp.selectedVerb!.id,dp.selectedVerb!.localId,"volitional"),
                           ),
                         ]
                       

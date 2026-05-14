@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:loggy/loggy.dart';
 
-String baseUrl = "https://10.0.2.2:8000";
+String baseUrl = "https://romaji-wamagi-api.chrisbriant.uk";
 
 
 class NetworkServices {

@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import '../providers/data_provider.dart';
 
 
-String baseUrl = "https://10.0.2.2:8000";
+String baseUrl = "https://romaji-wamagi-api.chrisbriant.uk";
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

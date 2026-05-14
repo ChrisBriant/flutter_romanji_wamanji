@@ -11,12 +11,26 @@ import '../providers/data_provider.dart';
 import 'package:provider/provider.dart';
 import '../data/verb.dart';
 
-class VerbDisplayScreen extends StatelessWidget {
+class VerbDisplayScreen extends StatefulWidget {
   static const String routeName = "/verbdisplayscreen";
 
   const VerbDisplayScreen({super.key});
 
+  @override
+  State<VerbDisplayScreen> createState() => _VerbDisplayScreenState();
+}
+
+class _VerbDisplayScreenState extends State<VerbDisplayScreen> {
+  bool loadingVerbForm = false;
+
   formClickAction(BuildContext context, verbId,localVerbId,form) async {
+    setState(() {
+      loadingVerbForm = true;
+    });
+
+    // await Future.delayed(Duration(seconds: 10));
+    // logInfo("Delay finished");
+
     logInfo("FORM AND ID $verbId, $localVerbId, $form");
     Map<String, dynamic>? verbExample = await NetworkServices.getVerbExampleApi(
       verbId, 
@@ -82,8 +96,12 @@ class VerbDisplayScreen extends StatelessWidget {
       }
     }
 
-  }
+    setState(() {
+      loadingVerbForm = false;
+    });
 
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -172,46 +190,55 @@ class VerbDisplayScreen extends StatelessWidget {
                           ListPairWithAction(
                             textA: "Present",
                             textB: dp.selectedVerb!.present,
+                            loading: loadingVerbForm,
                             formClickAction: () => formClickAction(context,dp.selectedVerb!.id,dp.selectedVerb!.localId,"present"),
                           ),
                          ListPairWithAction(
                             textA: "Past",
                             textB: dp.selectedVerb!.past,
+                            loading: loadingVerbForm,
                             formClickAction: () => formClickAction(context,dp.selectedVerb!.id,dp.selectedVerb!.localId,"past"),
                           ),
                          ListPairWithAction(
                             textA: "Negative",
                             textB: dp.selectedVerb!.negative,
+                            loading: loadingVerbForm,
                             formClickAction: () => formClickAction(context,dp.selectedVerb!.id,dp.selectedVerb!.localId,"negative"),
                           ),
                           ListPairWithAction(
                             textA: "Polite Present",
                             textB: dp.selectedVerb!.politePresent,
+                            loading: loadingVerbForm,
                             formClickAction: () => formClickAction(context,dp.selectedVerb!.id,dp.selectedVerb!.localId,"polite_present"),
                           ),
                          ListPairWithAction(
                             textA: "Polite Negative",
                             textB: dp.selectedVerb!.politeNegative,
+                            loading: loadingVerbForm,
                             formClickAction: () => formClickAction(context,dp.selectedVerb!.id,dp.selectedVerb!.localId,"polite_negative"),
                           ),
                           ListPairWithAction(
                             textA: "Polite Past",
                             textB: dp.selectedVerb!.politePast,
+                            loading: loadingVerbForm,
                             formClickAction: () => formClickAction(context,dp.selectedVerb!.id,dp.selectedVerb!.localId,"polite_past"),
                           ),
                          ListPairWithAction(
                             textA: "Polite Past Negative",
                             textB: dp.selectedVerb!.politePastNegative,
+                            loading: loadingVerbForm,
                             formClickAction: () => formClickAction(context,dp.selectedVerb!.id,dp.selectedVerb!.localId,"polite_past_negative"),
                           ),
                          ListPairWithAction(
                             textA: "Te Form",
                             textB: dp.selectedVerb!.teForm,
+                            loading: loadingVerbForm,
                             formClickAction: () => formClickAction(context,dp.selectedVerb!.id,dp.selectedVerb!.localId,"te_form"),
                           ),
                          ListPairWithAction(
                             textA: "Volitional",
                             textB: dp.selectedVerb!.volitional,
+                            loading: loadingVerbForm,
                             formClickAction: () => formClickAction(context,dp.selectedVerb!.id,dp.selectedVerb!.localId,"volitional"),
                           ),
                         ]

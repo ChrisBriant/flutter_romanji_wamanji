@@ -47,7 +47,7 @@ class ListPair extends StatelessWidget {
             ),
             padding: EdgeInsets.all(4),
             alignment: Alignment.centerLeft,
-            height: 40,
+            //height: 40,
             width: MediaQuery.of(context).size.width * .35,
             child: Text(
               textB,

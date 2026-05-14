@@ -23,7 +23,7 @@ class _AddVerbScreenState extends State<AddVerbScreen> {
 
   _addNewVerb() async {
     setState(() {
-      //_loading = true;
+      _loading = true;
     });
     AppDatabase db = AppDatabase();
     //Make the call to the backend
@@ -103,6 +103,9 @@ class _AddVerbScreenState extends State<AddVerbScreen> {
                 
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("The verb already exists.")));
+                setState(() {
+                  _loading = false;
+                });
               }
             }
             
@@ -147,7 +150,7 @@ class _AddVerbScreenState extends State<AddVerbScreen> {
               children: [
                 ElevatedButton(
                   onPressed: _loading ? null : () => _addNewVerb(),
-                  child: const Text("Add"),
+                  child: _loading ? const CircularProgressIndicator() : const Text("Add"),
                 ),
                 const SizedBox(width: 10,),
                 ElevatedButton(
